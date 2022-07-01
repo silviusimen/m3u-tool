@@ -1,0 +1,12 @@
+version: "3"
+
+services:
+  m3u-filter:
+    image: m3u-filter:latest
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    ports:
+      - 8123:80
+    volumes:
+      - ./:/var/www/html/

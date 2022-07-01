@@ -1,0 +1,29 @@
+{
+	"groups": [
+		{
+			"group_name": "USA Sports",
+			"name_matches": ["OLYMPIC", "Tennis", "ESPN", "USA OLYMPIC CHANNEL"]
+		},
+		{
+			"group_name": "CA: Canada Sports",
+			"name_matches": ["TSN"]
+		},
+		{
+			"group_name": "UK: Sport",
+			"name_matches": ["Eurosport"]
+		},
+		{
+			"group_name": "FR: France Sports",
+			"name_matches": ["EuroSport"]
+		},
+		{
+			"group_name": "DE: Germany Sport",
+			"name_matches": ["EUROSPORT"]
+		},
+		{
+			"group_name": "Romania",
+			"name_matches": ["EUROSPORT", "DIGI SPORT", "TELEKOM SPORT"]
+		}
+		
+	]
+}

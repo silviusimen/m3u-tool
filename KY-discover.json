@@ -1,0 +1,18 @@
+{
+	"groups": [
+		{
+			"group_name": "USA Entertainment",
+			"name_matches": ["Discovery", "DISCOVERY", "Smith"]
+		},
+		{
+			"group_name": "USA Documentary"
+		},
+		{
+			"group_name": "UK: Documentary"
+		},
+		{
+			"group_name": "CA: Canada General",
+			"name_matches": ["Discovery", "DISCOVERY", "Smith"]
+		}
+	]
+}

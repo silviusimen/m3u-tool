@@ -1,0 +1,16 @@
+{
+	"groups": [
+		{
+			"group_name": "24/7 Classic Show",
+			"name_matches": ["MASH", "Seinfeld", "Married", "Columbo"]
+		},
+		{
+			"group_name": "24/7 Tv Series",
+			"name_matches": ["MASH"]
+		},
+		{
+			"group_name": "24/7 Classic Tv Series",
+			"name_matches": ["MASH", "Columbo", "Macgyver", "JAG"]
+		}
+	]
+}

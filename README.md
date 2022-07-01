@@ -36,3 +36,11 @@ http://192.168.0.10/m3u-filter.php?url=http%3A%2F%2Fciao.ok2.se%2Fget.php%3Fuser
 #EXTINF:-1 tvg-ID="ctvhalifax.ca" tvg-name="CTV HALIFAX" tvg-logo="https://s3.amazonaws.com/ok2logo/ctv.png" group-title="ENGLISH",CTV HALIFAX
 http://ciao.ok2.se:80/USER/PASS/4074
 ```
+
+
+### Filter a m3u file by a predefined filter
+```
+http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-discover.json
+http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-sports.json
+http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-reruns.json
+```
