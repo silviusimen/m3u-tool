@@ -44,3 +44,9 @@ http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-discover.json
 http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-sports.json
 http://localhost:8123/m3u-filter2.php?m3u=KY-test.m3u&filter=KY-reruns.json
 ```
+
+
+KY curl
+code refact
+startrek
+kodi tv guide

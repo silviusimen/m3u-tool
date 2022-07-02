@@ -1,65 +1,36 @@
 <?php
 
     require_once "m3u-utils.php";
-
-    function out($msg)
+  
+    function load_json_from_file($filename) 
     {
-        echo "$msg".PHP_EOL."<BR>";
-    }
+        $contents = @file_get_contents($filename);
+        $json = json_decode($contents, true);
 
-    function preout($msg)
-    {
-        echo PHP_EOL."<pre>$msg</pre>".PHP_EOL."<BR>";
-    }
-
-    function read_m3u($url, $cache)
-    {
-        if ($cache == "no")
+        if ($json === NULL)
         {
-            return file_get_contents($url);
+            $json = array();
         }
+        
+        return $json;
+    } 
 
-        $hash = sha1($url);
-        $cache_file = "/tmp/$hash.txt";
-
-        if ($cache == "force_clear")
-        {
-            unlink($cache_file);
-        }
-
-        $cached_data = @file_get_contents($cache_file);
-        if ($cached_data === false)
-        {
-            $m3u = file_get_contents($url);
-            file_put_contents($cache_file,$m3u);
-        }
-        else
-        {
-            $m3u = $cached_data;
-        }
-
-        return $m3u;
-    }
 
     $debug = @urldecode($_REQUEST['debug']);
-    $cache = @urldecode($_REQUEST['cache']);
-    $url = urldecode($_REQUEST['url']);
-    $groups = explode(",",urldecode($_REQUEST['groups']));
-    $m3u_string = read_m3u($url, $cache);
-    $m3u = m3u_to_json($m3u_string);
-    $filtered = filter_m3u_by_groups($m3u, $groups);
+    $m3u = urldecode($_REQUEST['m3u']);
+    $filters = explode(",",urldecode($_REQUEST['filters']));
 
-    if ($debug == "true")
+    $m3u_string = file_get_contents($m3u);
+    $m3u_entries = m3u_to_json($m3u_string);
+
+    $filtered_entries = array();
+    foreach ($filters as $filter)
     {
-        out("Requested groups=".print_r($groups, true));
-        out("m3u was read from $url");
-        out("Initial count=".count($m3u));
-        out("Filtered count=".count($filtered));
-        preout("Available groups=".print_r(get_list_of_groups($m3u), true));
+        $filter_cfg = load_json_from_file($filter);
+        $new_entries = filter_entries($m3u_entries, $filter_cfg);
+        $filtered_entries = array_merge($filtered_entries, $new_entries);
     }
-    else
-    {
-        echo render_m3u($filtered);
-    }
+    
+    render_m3u($filtered_entries);
 
 ?>

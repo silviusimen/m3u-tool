@@ -10,8 +10,19 @@
 			"name_matches": ["MASH"]
 		},
 		{
+			"group_name": "24/7 Shows",
+			"name_matches": ["Star Trek"]
+		},
+		{
+			"group_name": "24/7  SYFY",
+			"name_matches": ["Star Trek"]
+		},
+		
+		{
 			"group_name": "24/7 Classic Tv Series",
 			"name_matches": ["MASH", "Columbo", "Macgyver", "JAG"]
 		}
+
+		
 	]
 }
