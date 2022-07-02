@@ -45,6 +45,8 @@
         {
             $entry['group'] = get_tag_value_from_extinf($entry["extinf"], "group-title");
             $entry['name'] = get_tag_value_from_extinf($entry["extinf"], "tvg-name");
+            $entry['id'] = get_tag_value_from_extinf($entry["extinf"], "tvg-id");
+            $entry['logo'] = get_tag_value_from_extinf($entry["extinf"], "tvg-logo");
         }
         // #EXTINF:-1 tvg-id="" tvg-name="24/7 Wild Nile" tvg-logo="" group-title="24/7 Shows",24/7 Wild Nile
         // http://ky-iptv.com:80/srM6sUk8hD/9gCrWW2Rqq/388512.ts
@@ -83,17 +85,30 @@
         return $filtered_entries;
     }
 
+    function render_m3u_entry_extinf($entry)
+    {
+        $buffer = "#EXTINF:-1 ";
+        $buffer .= 'tvg-id="'.$entry['id'].'" ';
+        $buffer .= 'tvg-name="'.$entry['name'].'" ';
+        $buffer .= 'tvg-logo="'.$entry['logo'].'" ';
+        $buffer .= 'group-title="'.$entry['group'].'"';
+        $buffer .= ',' . $entry['name'];
+        return $buffer;
+    }
+
     function render_m3u($m3u_entries)
     {
         $buffer = "";
         $buffer .= "#EXTM3U".PHP_EOL;
         foreach ($m3u_entries as $entry)
         {
-            $buffer .= $entry["extinf"].PHP_EOL;
+            //$buffer .= print_r($entry, true).PHP_EOL;
+            //$buffer .= $entry["extinf"].PHP_EOL;
+            $buffer .= render_m3u_entry_extinf($entry).PHP_EOL;
             $buffer .= $entry["url"].PHP_EOL;
         }
 
-        return $buffer;
+        echo $buffer;
     }
 
     function debug_list_m3u($m3u_entries)
@@ -150,6 +165,13 @@
         return false;
     }
 
+    function process_entry_for_filter($entry, $filter_json_spec) 
+    {
+        $entry['group'] = $filter_json_spec['new_group_name'];
+        //print_r($entry);
+        return $entry;
+    }
+
     function filter_entries($m3u_entries, $filter_json_spec) 
     {
         $filtered_entries = array();
@@ -157,7 +179,7 @@
         {
             if (entry_belongs_to_filter_spec($entry, $filter_json_spec))
             {
-                $filtered_entries[] = $entry;
+                $filtered_entries[] = process_entry_for_filter($entry, $filter_json_spec);
             }
         }
         return $filtered_entries;

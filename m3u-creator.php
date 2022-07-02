@@ -15,8 +15,8 @@
         return $json;
     } 
 
-    $filter_cfg = load_json_from_file("KY-discover.json");
-    $m3u_string = file_get_contents("KY-test.m3u");
+    $filter_cfg = load_json_from_file("KY-reruns.json");
+    $m3u_string = file_get_contents("KY.m3u");
     $m3u_entries = m3u_to_json($m3u_string);
     //$groups = get_list_of_groups($m3u_entries);
     //print_r($groups);
