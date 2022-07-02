@@ -31,11 +31,18 @@
     {
         $tag = "$tag_name=\"";
         $pos1 = strpos($extinf, $tag);
-        $pos2 = strpos($extinf, '"', $pos1 + strlen($tag) );
-        $pos1 += strlen($tag);
-        $value = substr($extinf, $pos1, $pos2-$pos1);
-
-        return $value;
+        if ($pos1 !== false)
+        {
+            $pos2 = strpos($extinf, '"', $pos1 + strlen($tag) );
+            $pos1 += strlen($tag);
+            $value = substr($extinf, $pos1, $pos2-$pos1);
+    
+            return $value;
+        }
+        else
+        {
+            return "";
+        }
     }
 
     function m3u_to_json($m3u_string)
@@ -102,8 +109,6 @@
         $buffer .= "#EXTM3U".PHP_EOL;
         foreach ($m3u_entries as $entry)
         {
-            //$buffer .= print_r($entry, true).PHP_EOL;
-            //$buffer .= $entry["extinf"].PHP_EOL;
             $buffer .= render_m3u_entry_extinf($entry).PHP_EOL;
             $buffer .= $entry["url"].PHP_EOL;
         }
