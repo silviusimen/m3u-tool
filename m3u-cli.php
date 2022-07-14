@@ -51,5 +51,28 @@
         }
     }
 
+    if ($argv[1] == "list-group")
+    {
+        $group_name = $argv[2];
+        $m3u_string = file_get_contents("KY.m3u");
+        $m3u_entries = m3u_to_json($m3u_string);
+        
+        $filtered_m3u_entries = get_entries_mathcing_group_name($m3u_entries, $group_name);
+        foreach($filtered_m3u_entries as $entry) 
+        {
+            echo $entry['name'].PHP_EOL;
+        }
+    }
+
+    if ($argv[1] == "list-all-channels")
+    {
+        $m3u_string = file_get_contents("KY.m3u");
+        $m3u_entries = m3u_to_json($m3u_string);
+        foreach($m3u_entries as $entry) 
+        {
+            echo $entry['group'] . " <--> " . $entry['name'].PHP_EOL;
+        }
+    }
+
 
 ?>

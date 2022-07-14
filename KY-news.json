@@ -2,10 +2,29 @@
 	"new_group_name": "News",
 	"groups": [
 		{
-			"group_name": "USA News"
+			"group_name": "USA News",
+			"name_matches": ["USA CNN INTERNATIONAL*", "USA CNN UHD", "USA MSNBC", "USA CNBC UHD", "USA CNN", "USA CNBC World", "USA BBC World News", "USA Bloomberg"]
 		},
+
 		{
-			"group_name": "CA: Canada General"
+			"group_name": "UK: News",
+			"name_matches": ["UK BBC News HD", "UK BBC World News", "UK BBC 1", "UK BBC 2", "", "UK: DW News FHD", "UK France 24 English"]
+		},
+		
+		{
+			"group_name": "DE: Germany News",
+			"name_matches": ["DE: DW HD", "DE: DW TV"]
+		},
+
+		{
+			"group_name": "FR: France General",
+			"name_matches": ["FR FRANCE 2", "FR FRANCE 3", "FR FRANCE 5", "FR FRANCE INFO HD", "FR FRANCE 24"]
+		},
+
+		{
+			"group_name": "CA: Canada General",
+			"name_matches": ["CA BBC WORLD NEWS", "CA BNN Bloomberg", "CA CablePulse 24", "CA CBC Montreal", "CA CBC News Network", "CA CBC Ottawa", "CA CBC Toronto", "CA CITY MONTREAL", "CA CNN HD", "CA CNN INTERNATIONAL", "CA CTV 2 (Ottawa)", "CA CTV News Channel", "CA CTV TORONTO", "CA CTV TORONTO (CFTO)", "CA GLOBAL TORONTO", "CA CP24 HD", "CA Global FHD", "CA Global National", "CA CTV MONTREAL"]
+			
 		}
 		
 	]

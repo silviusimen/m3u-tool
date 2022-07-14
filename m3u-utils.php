@@ -177,6 +177,20 @@
         return $entry;
     }
 
+    function get_entries_mathcing_group_name($m3u_entries, $group_name) 
+    {
+        $filtered_entries = array();
+        foreach ($m3u_entries as $entry)
+        {
+            if ($entry['group'] == $group_name)
+            {
+                $filtered_entries[] = $entry;
+            }
+        }
+        return $filtered_entries;
+    }
+
+
     function filter_entries($m3u_entries, $filter_json_spec) 
     {
         $filtered_entries = array();
