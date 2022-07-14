@@ -1,0 +1,20 @@
+{
+	"new_group_name": "News",
+	"groups": [
+		{
+			"group_name": "FR: France General"
+		},
+		{
+			"group_name": "FR: France Decouvertes"
+		},
+		{
+			"group_name": "FR: France Cinema"
+		},
+		{
+			"group_name": "FR: France Info"
+		},
+		{
+			"group_name": "CA: Canada FR"
+		}
+	]
+}

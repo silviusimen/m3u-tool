@@ -1,0 +1,12 @@
+{
+	"new_group_name": "News",
+	"groups": [
+		{
+			"group_name": "USA News"
+		},
+		{
+			"group_name": "CA: Canada General"
+		}
+		
+	]
+}

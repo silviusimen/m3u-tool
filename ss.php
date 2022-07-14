@@ -1,5 +1,7 @@
 <?php
 
-header("Location: m3u-filter.php?m3u=KY.m3u&filters=KY-reruns.json,KY-discover.json,KY-sports.json"); 
+$filters = "KY-reruns.json,KY-discover.json,KY-news.json,KY-sports.json,KY-romania.json,KY-french.json";
+
+header("Location: m3u-filter.php?m3u=KY.m3u&filters=$filters"); 
 
 ?>
