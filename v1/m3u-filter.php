@@ -22,6 +22,7 @@
 
     $m3u_string = file_get_contents($m3u);
     $m3u_entries = m3u_to_json($m3u_string);
+    print_r($m3u_entries); die;
 
     $filtered_entries = array();
     foreach ($filters as $filter)

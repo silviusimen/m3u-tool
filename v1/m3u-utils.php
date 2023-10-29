@@ -55,8 +55,6 @@
             $entry['id'] = get_tag_value_from_extinf($entry["extinf"], "tvg-id");
             $entry['logo'] = get_tag_value_from_extinf($entry["extinf"], "tvg-logo");
         }
-        // #EXTINF:-1 tvg-id="" tvg-name="24/7 Wild Nile" tvg-logo="" group-title="24/7 Shows",24/7 Wild Nile
-        // http://ky-iptv.com:80/srM6sUk8hD/9gCrWW2Rqq/388512.ts
 
         return $entries;
     }
