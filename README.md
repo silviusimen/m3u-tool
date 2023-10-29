@@ -15,6 +15,8 @@ export KY_PANEL_URL='http://ky-tv.cc:25461/panel_api.php?username=USERNAME&passw
 
 ./ky-process.sh
 
-# Deploy ky-filter-1.m3u 
+# Deploy ky-filter-1.m3u to web server
+./ky-deploy.sh
+
 ```
 
