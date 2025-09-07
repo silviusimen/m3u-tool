@@ -33,7 +33,7 @@ class AppUtil:
         global LOG_TO_FILE_ENABLED
 
         PANEL_FILE = os.environ.get('PANEL_FILE', 'KY-panel.json')
-        PANEL_FILTER_FILE = os.environ.get('PANEL_FILE', 'KY-panel_filters.json')
+        PANEL_FILTER_FILE = os.environ.get('PANEL_FILTER_FILE', 'KY-filter_all.json')
         OUT_M3U_FILE = os.environ.get('OUT_M3U_FILE', 'ky-filter-1.m3u')
         LOG_TO_FILE_ENABLED = AppUtil.tobool(os.environ.get('LOG_TO_FILE_ENABLED', False))
 
@@ -125,13 +125,13 @@ class KY:
       JSON.json_write(filename, file_contents)
 
     def process():
+      logging.debug('Loading filter file {} '.format(PANEL_FILTER_FILE))
+      filter_definition = JSON.json_load(PANEL_FILTER_FILE)
+      logging.debug('Loading filter file {} complete'.format(PANEL_FILTER_FILE))
+
       logging.debug('Loading panel file {} '.format(PANEL_FILE))
       panel_data = JSON.json_load(PANEL_FILE)
       logging.debug('Loading panel file {} complete'.format(PANEL_FILE))
-
-      logging.debug('Loading filter file {} '.format(PANEL_FILE))
-      filter_definition = JSON.json_load(PANEL_FILTER_FILE)
-      logging.debug('Loading filter file {} complete'.format(PANEL_FILE))
 
       logging.debug('Processing')
       categories = PANEL.get_active_categories(panel_data, filter_definition)
