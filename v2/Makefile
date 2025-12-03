@@ -9,6 +9,8 @@ SCRIPT = filter_live_channels.py
 # Default files (can be overridden)
 INPUT_FILE ?= full_playlist.m3u
 OUTPUT_FILE ?= live_channels.m3u
+GROUPS_OUTPUT_FILE ?= groups.txt
+GROUPS_FILTER_FILE ?= allowed_groups.txt
 
 # Default target
 .PHONY: help
@@ -18,9 +20,15 @@ help:
 	@echo "  make setup                              - Set up virtual environment and install dependencies"
 	@echo "  make run                                - Run the M3U filter script with default files"
 	@echo "  make filter                             - Alias for 'run'"
+	@echo "  make filter-by-groups                   - Filter using groups from file"
 	@echo "  make run INPUT_FILE=input.m3u           - Run with custom input file"
 	@echo "  make run OUTPUT_FILE=output.m3u         - Run with custom output file"
 	@echo "  make run INPUT_FILE=in.m3u OUTPUT_FILE=out.m3u - Run with both custom files"
+	@echo "  make groups                             - List group titles and save to file"
+	@echo "  make groups INPUT_FILE=playlist.m3u     - List group titles from custom file"
+	@echo "  make groups-console                     - List group titles (console only)"
+	@echo "  make groups-console INPUT_FILE=file.m3u - List group titles (console only, custom file)"
+	@echo "  make analyze                            - Alias for 'groups'"
 	@echo "  make clean                              - Remove generated files and virtual environment"
 	@echo "  make reinstall                          - Clean and setup again"
 	@echo "  make check                              - Check if input file exists and dependencies are installed"
@@ -31,8 +39,10 @@ help:
 	@echo "  - Default input file: $(INPUT_FILE)"
 	@echo ""
 	@echo "Examples:"
-	@echo "  make run INPUT_FILE=playlist.m3u OUTPUT_FILE=filtered.m3u"
-	@echo "  make filter INPUT_FILE=source.m3u"
+	@echo "  make run INPUT_FILE=full_playlist.m3u OUTPUT_FILE=filtered.m3u"
+	@echo "  make groups INPUT_FILE=full_playlist.m3u GROUPS_OUTPUT_FILE=all_groups.txt"
+	@echo "  make filter INPUT_FILE=full_playlist.m3u OUTPUT_FILE=filtered.m3u"
+	@echo "  make filter-by-groups INPUT_FILE=full_playlist.m3u GROUPS_FILTER_FILE=my_allowed_groups.txt OUTPUT_FILE=filtered.m3u"
 
 # Set up virtual environment and install dependencies
 .PHONY: setup
@@ -89,6 +99,47 @@ run: check
 .PHONY: filter
 filter: run
 
+# Filter using groups from allowed groups file
+.PHONY: filter-by-groups
+filter-by-groups: check
+	@if [ ! -f "$(GROUPS_FILTER_FILE)" ]; then \
+		echo "❌ Groups filter file '$(GROUPS_FILTER_FILE)' not found!"; \
+		echo "   Create this file with one group name per line."; \
+		exit 1; \
+	fi
+	@echo "🎯 Running M3U playlist filter with groups filter..."
+	@echo "   Input:  $(INPUT_FILE)"
+	@echo "   Output: $(OUTPUT_FILE)"
+	@echo "   Groups: $(GROUPS_FILTER_FILE)"
+	$(PYTHON) $(SCRIPT) "$(INPUT_FILE)" "$(OUTPUT_FILE)" --filter-by-groups "$(GROUPS_FILTER_FILE)"
+	@if [ -f "$(OUTPUT_FILE)" ]; then \
+		echo ""; \
+		echo "📁 Files created:"; \
+		echo "   📄 $(OUTPUT_FILE) (filtered by groups)"; \
+		echo ""; \
+		echo "📊 File sizes:"; \
+		ls -lh "$(INPUT_FILE)" "$(OUTPUT_FILE)" | awk '{print "   " $$9 " - " $$5}'; \
+	fi
+
+# List all group titles from the input file and save to file
+.PHONY: groups
+groups: check
+	@echo "📊 Analyzing M3U playlist group titles..."
+	@echo "   Input: $(INPUT_FILE)"
+	@echo "   Output: $(GROUPS_OUTPUT_FILE)"
+	$(PYTHON) $(SCRIPT) --list-groups --groups-output "$(GROUPS_OUTPUT_FILE)" "$(INPUT_FILE)"
+
+# List all group titles from the input file (console only)
+.PHONY: groups-console
+groups-console: check
+	@echo "📊 Analyzing M3U playlist group titles (console only)..."
+	@echo "   Input: $(INPUT_FILE)"
+	$(PYTHON) $(SCRIPT) --list-groups "$(INPUT_FILE)"
+
+# Alias for groups
+.PHONY: analyze
+analyze: groups
+
 # Clean up generated files and virtual environment
 .PHONY: clean
 clean:
@@ -96,6 +147,10 @@ clean:
 	@if [ -f "$(OUTPUT_FILE)" ]; then \
 		rm -f $(OUTPUT_FILE); \
 		echo "   🗑️  Removed $(OUTPUT_FILE)"; \
+	fi
+	@if [ -f "$(GROUPS_OUTPUT_FILE)" ]; then \
+		rm -f $(GROUPS_OUTPUT_FILE); \
+		echo "   🗑️  Removed $(GROUPS_OUTPUT_FILE)"; \
 	fi
 	@if [ -d "$(VENV_DIR)" ]; then \
 		rm -rf $(VENV_DIR); \
@@ -136,6 +191,18 @@ status:
 		echo "   Output File: ✅ $(OUTPUT_FILE) ($(shell wc -l < $(OUTPUT_FILE) 2>/dev/null || echo '?') lines)"; \
 	else \
 		echo "   Output File: ❌ $(OUTPUT_FILE) not found"; \
+	fi
+	@echo ""
+	@if [ -f "$(GROUPS_OUTPUT_FILE)" ]; then \
+		echo "   Groups File: ✅ $(GROUPS_OUTPUT_FILE) ($(shell wc -l < $(GROUPS_OUTPUT_FILE) 2>/dev/null || echo '?') groups)"; \
+	else \
+		echo "   Groups File: ❌ $(GROUPS_OUTPUT_FILE) not found"; \
+	fi
+	@echo ""
+	@if [ -f "$(GROUPS_FILTER_FILE)" ]; then \
+		echo "   Filter File: ✅ $(GROUPS_FILTER_FILE) ($(shell wc -l < $(GROUPS_FILTER_FILE) 2>/dev/null || echo '?') groups)"; \
+	else \
+		echo "   Filter File: ❌ $(GROUPS_FILTER_FILE) not found"; \
 	fi
 	@echo ""
 	@if [ -d "$(VENV_DIR)" ] && $(PIP) show m3u_parser > /dev/null 2>&1; then \

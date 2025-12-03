@@ -2,3 +2,4 @@
 *.m3u
 .env
 venv/
+*.txt
