@@ -229,3 +229,6 @@ python-version:
 
 # Force targets (don't check for files)
 .PHONY: help setup check run filter clean reinstall dev-setup status test python-version
+
+run-golden:
+	make filter-by-groups INPUT_FILE=tv_channels_5ZFGN8L_plus.m3u OUTPUT_FILE=golden_filtered.m3u GROUPS_FILTER_FILE=my_allowed_groups.txt
